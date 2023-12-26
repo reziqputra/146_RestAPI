@@ -77,7 +77,12 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun KontakLayout(kontak: List<Kontak>, modifier: Modifier = Modifier) {
+fun KontakLayout(
+    kontak: List<Kontak>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Kontak) -> Unit,
+    onDeleteClick: (Kontak) -> Unit = {}
+) {
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
@@ -86,7 +91,7 @@ fun KontakLayout(kontak: List<Kontak>, modifier: Modifier = Modifier) {
         items(kontak) { kontak ->
             KontakCard(kontak = kontak, modifier = Modifier
                 .fillMaxWidth()
-                .clickable { })
+                .clickable { onDetailClick(kontak) }, onDeleteClick = { onDeleteClick(kontak) })
         }
     }
 }
@@ -112,11 +117,11 @@ fun KontakCard(
                 Icon(imageVector = Icons.Default.Phone, contentDescription = null)
                 Text(text = kontak.telpon, style = MaterialTheme.typography.titleMedium)
             }
-            Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically)
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically)
             {
                 Text(text = kontak.alamat, style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = { onDeleteClick(kontak)}) {
+                IconButton(onClick = { onDeleteClick(kontak) }) {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                 }
             }
