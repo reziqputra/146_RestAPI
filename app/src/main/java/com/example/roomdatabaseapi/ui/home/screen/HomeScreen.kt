@@ -81,21 +81,30 @@ fun KontakLayout(kontak: List<Kontak>, modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(kontak){
-            kontak ->KontakCard(kontak = kontak, modifier = Modifier
-            .fillMaxWidth()
-            .clickable { })
+        items(kontak) { kontak ->
+            KontakCard(kontak = kontak, modifier = Modifier
+                .fillMaxWidth()
+                .clickable { })
         }
     }
 }
 
 @Composable
-fun KontakCard(kontak: Kontak, modifier: Modifier = Modifier){
+fun KontakCard(
+    kontak: Kontak,
+    onDeleteClick: (Kontak) -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = modifier, shape = MaterialTheme.shapes.medium, elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Column (modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)){
-            Row (modifier = Modifier.fillMaxWidth()){
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = kontak.nama, style = MaterialTheme.typography.titleLarge)
                 Spacer(Modifier.weight(1f))
                 Icon(imageVector = Icons.Default.Phone, contentDescription = null)
