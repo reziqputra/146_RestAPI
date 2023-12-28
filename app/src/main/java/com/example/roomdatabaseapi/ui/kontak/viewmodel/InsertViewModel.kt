@@ -20,7 +20,7 @@ class InsertViewModel(private val kontakRepository: KontakRepository) : ViewMode
     suspend fun insertKontak(){
         viewModelScope.launch {
             try {
-                kontakRepository.insertKontak(insertKontakState.insertUiEvent.toKontak())
+                kontakRepository.insertKontak(insertKontakState.insertUiEvent.toKontak)
             } catch (e: Exception){
                 e.printStackTrace()
             }
@@ -37,6 +37,13 @@ data class InsertUiEvent(
     val nama: String = "",
     val email: String = "",
     val nohp: String = ""
+)
+
+fun InsertUiEvent.toKontak(): Kontak = Kontak(
+    id = id,
+    nama = nama,
+    alamat = email,
+    telpon = nohp,
 )
 
 fun Kontak.toUiStateKontak(): InsertUiState = InsertUiState(
